@@ -1,0 +1,7 @@
+nfs-server-provisioner:
+  persistence:
+    enabled: true
+    size: 5Gi
+  storageClass:
+    defaultClass: true
+    name: nfs

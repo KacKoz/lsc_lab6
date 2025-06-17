@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cp-index-job
+spec:
+  template:
+    metadata:
+      name: cp-index-job
+    spec:
+      containers:
+        - name: copier
+          image: busybox
+          command: ["sh", "-c", "echo '<!DOCTYPE html> <html><body> <h1>Witam serdecznie</h1> </body> </html>' > /mnt/nfs/index.html"]
+          volumeMounts:
+            - name: wc-pvc
+              mountPath: /mnt/nfs
+      restartPolicy: OnFailure
+      volumes:
+        - name: wc-pvc
+          persistentVolumeClaim:
+            claimName: wc-pvc

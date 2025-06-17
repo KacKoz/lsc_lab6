@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-server
+  template:
+    metadata:
+      labels:
+        app: web-server
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: wc-pvc-vol
+              mountPath: /usr/share/nginx/html/
+      volumes:
+      - name: wc-pvc-vol
+        persistentVolumeClaim:
+          claimName: wc-pvc
